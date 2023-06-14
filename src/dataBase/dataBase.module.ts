@@ -3,5 +3,6 @@ import { DataBaseService } from './dataBase.service';
 
 @Module({
   providers: [DataBaseService],
+  exports: [DataBaseService],
 })
 export class DataBaseModule {}
