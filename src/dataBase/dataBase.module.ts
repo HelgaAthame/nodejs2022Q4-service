@@ -4,4 +4,4 @@ import { DataBaseService } from './dataBase.service';
 @Module({
   providers: [DataBaseService],
 })
-export class DBModule {}
+export class DataBaseModule {}
