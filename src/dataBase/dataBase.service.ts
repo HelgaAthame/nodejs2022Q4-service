@@ -11,11 +11,11 @@ export class DataBaseService {
   private readonly tracks: Track[] = [];
   private readonly artists: Artist[] = [];
   private readonly albums: Album[] = [];
-  private readonly fauvorites: Favorites = {
+  private readonly favorites: Favorites = {
     artists: [],
     albums: [],
     tracks: [],
   };
 
-  
+
 }
