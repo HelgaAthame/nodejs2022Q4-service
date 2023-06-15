@@ -8,4 +8,8 @@ export class TrackService {
   getAllTracks() {
     return this.dataBaseService.getTracks();
   }
+
+  getTrackById(id: string) {
+    return this.dataBaseService.getTrack(id);
+  }
 }

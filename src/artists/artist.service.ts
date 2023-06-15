@@ -8,4 +8,8 @@ export class ArtistService {
   getAllArtists() {
     return this.dataBaseService.getArtists();
   }
+
+  getArtistById(id: string) {
+    return this.dataBaseService.getArtist(id);
+  }
 }

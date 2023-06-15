@@ -6,6 +6,10 @@ export class UserService {
   constructor(private dataBaseService: DataBaseService) {}
 
   getAllUsers() {
-    this.dataBaseService.getUsers();
+    return this.dataBaseService.getUsers();
+  }
+
+  getUserById(id: string) {
+    return this.dataBaseService.getUser(id);
   }
 }

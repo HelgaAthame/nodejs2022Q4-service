@@ -8,4 +8,8 @@ export class AlbumService {
   getAllAlbums() {
     return this.dataBaseService.getAlbums();
   }
+
+  getAlbumById(id: string) {
+    return this.dataBaseService.getAlbum(id);
+  }
 }
