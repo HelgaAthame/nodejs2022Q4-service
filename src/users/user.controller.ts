@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseUUIDPipe, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/creat-user.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('user')
 export class UserController {
@@ -12,7 +13,7 @@ export class UserController {
   }
 
   @Get (':id')
-  getUserById (@Param('uuid', new ParseUUIDPipe()) id: string) {
+  getUserById (@Param('id', new ParseUUIDPipe()) id: string) {
     const user = this.userService.getUserById(id);
     if (!user) {
       throw new HttpException(
@@ -26,5 +27,13 @@ export class UserController {
   @Post()
   createUser (@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
+  }
+
+  @Put()
+  updatePassword (
+    @Body() updatePasswordDto: UpdatePasswordDto,
+    @Param('uuid', new ParseUUIDPipe()) id: string
+  ) {
+    return this.userService.updatePassword(updatePasswordDto, id);
   }
 }

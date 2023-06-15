@@ -8,4 +8,6 @@ export class FavoritesService {
   getAllFavorites() {
     return this.dataBaseService.getFavorites();
   }
+
+  
 }
