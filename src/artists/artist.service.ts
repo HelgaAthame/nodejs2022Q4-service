@@ -29,8 +29,7 @@ export class ArtistService {
 
   updateArtist(updateArtistDto: UpdateArtistDto, id: string) {
     const artist = this.dataBaseService.getArtist(id);
-    if (!artist)
-      throw new HttpException(`Artist ${id} doesn't exist`, HttpStatus.NOT_FOUND);
+    if (!artist) throw new HttpException(`Artist ${id} doesn't exist`, HttpStatus.NOT_FOUND);
     const updatedArtist = { ...artist, ...updateArtistDto };
     this.dataBaseService.updateArtist(updatedArtist, id);
     return updatedArtist;
