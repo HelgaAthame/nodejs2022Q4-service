@@ -130,17 +130,22 @@ export class DataBaseService {
 
 
   //favorites
+  isIt(id: string, what: string) {
+    const el = this[what].find((item: { id: string; }) => item.id === id);
+    return el ? true : false;
+  }
 
   addFavorite(id: string, what: string) {
     this.favorites[what].push(id);
   }
 
   getFavorites() {
-    return {
+    const favorites ={
       artists: this.artists.filter(artist => this.favorites.artists.includes(artist.id)),
       albums: this.albums.filter(album => this.favorites.albums.includes(album.id)),
       tracks: this.tracks.filter(track => this.favorites.tracks.includes(track.id)),
     };
+    return favorites;
   }
 
   deleteFavorite(id: string, what: string) {

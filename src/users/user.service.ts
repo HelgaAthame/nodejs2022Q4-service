@@ -27,7 +27,14 @@ export class UserService {
       updatedAt: Date.now(),
     }
     this.dataBaseService.addUser(newUser);
-    return newUser;
+    const userToReturn = {
+      id: newUser.id,
+      login: newUser.login,
+      version: newUser.version,
+      createdAt: newUser.createdAt,
+      updatedAt: newUser.updatedAt,
+    }
+    return userToReturn;
   }
 
   updatePassword(updatePasswordDto: UpdatePasswordDto, id: string) {
@@ -57,7 +64,15 @@ export class UserService {
 
     this.dataBaseService.updateUser(updatedUser, id);
 
-    return updatedUser;
+    const userToReturn = {
+      id: updatedUser.id,
+      login: updatedUser.login,
+      version: updatedUser.version,
+      createdAt: updatedUser.createdAt,
+      updatedAt: updatedUser.updatedAt,
+    }
+
+    return userToReturn;
   }
 
   deleteUser(id: string) {

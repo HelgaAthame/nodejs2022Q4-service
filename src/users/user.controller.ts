@@ -2,18 +2,19 @@ import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Par
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/creat-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { User } from './interfaces/user.interface';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get ()
-  getAllUsers() {
+  getAllUsers(): User[] {
     return this.userService.getAllUsers();
   }
 
   @Get (':id')
-  getUserById (@Param('id', new ParseUUIDPipe()) id: string) {
+  getUserById (@Param('id', new ParseUUIDPipe()) id: string): User {
     const user = this.userService.getUserById(id);
     if (!user) {
       throw new HttpException(
@@ -26,6 +27,17 @@ export class UserController {
 
   @Post()
   createUser (@Body() createUserDto: CreateUserDto) {
+    if (
+      !createUserDto.hasOwnProperty('login')
+      || !createUserDto.hasOwnProperty('password')
+      || typeof createUserDto.login !== 'string'
+      || typeof createUserDto.password !== 'string'
+    ) {
+      throw new HttpException(
+        'Request body does not contain required fields',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
     return this.userService.createUser(createUserDto);
   }
 
