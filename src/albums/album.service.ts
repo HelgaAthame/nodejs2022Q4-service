@@ -24,9 +24,6 @@ export class AlbumService {
       artistId: createAlbumDto.artistId,
     };
 
-    const artist = this.dataBaseService.getArtist(createAlbumDto.artistId);
-    if (!artist) throw new HttpException(`Artist ${createAlbumDto.artistId} doesn't exist`, HttpStatus.NOT_FOUND);
-
     this.dataBaseService.addAlbum(newAlbum);
     return newAlbum;
   }

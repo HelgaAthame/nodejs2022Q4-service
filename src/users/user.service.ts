@@ -59,4 +59,8 @@ export class UserService {
 
     return updatedUser;
   }
+
+  deleteUser(id: string) {
+    this.dataBaseService.deleteUser(id);
+  }
 }

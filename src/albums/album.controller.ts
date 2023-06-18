@@ -2,18 +2,19 @@ import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Par
 import { AlbumService } from './album.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
+import { Album } from './interfaces/album.interface';
 
 @Controller('album')
 export class AlbumController {
   constructor(private readonly albumService: AlbumService) {}
 
   @Get()
-  getAllAlbums() {
+  getAllAlbums(): Album[] {
     return this.albumService.getAllAlbums();
   }
 
   @Get(':id' )
-  getAlbumById(@Param('uuid', new ParseUUIDPipe()) id: string) {
+  getAlbumById(@Param('id', new ParseUUIDPipe()) id: string): Album {
     const album = this.albumService.getAlbumById(id);
     if (!album) {
       throw new HttpException(
@@ -25,10 +26,10 @@ export class AlbumController {
   }
 
   @Post()
-  createAlbum (@Body() createAlbumDto: CreateAlbumDto) {
-    if (!createAlbumDto.name
-      || !createAlbumDto.year
-      || !createAlbumDto.artistId
+  createAlbum (@Body() createAlbumDto: CreateAlbumDto): Album {
+    if (!createAlbumDto.hasOwnProperty('name')
+      || !createAlbumDto.hasOwnProperty('year')
+      || !createAlbumDto.hasOwnProperty('artistId')
     ) {
       throw new HttpException(
         'Request body does not contain required fields',
@@ -43,9 +44,13 @@ export class AlbumController {
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateAlbumDto: UpdateAlbumDto,
   ) {
-    if (typeof updateAlbumDto.name !== 'string'
-      || typeof updateAlbumDto.year !== 'number'
-      || typeof updateAlbumDto.artistId !== 'string'
+    if (
+      !updateAlbumDto.hasOwnProperty('name')
+      || !updateAlbumDto.hasOwnProperty('year')
+      || !updateAlbumDto.hasOwnProperty('artistId')
+      || typeof updateAlbumDto.name === 'boolean'
+      || typeof updateAlbumDto.year === 'string'
+      || typeof updateAlbumDto.artistId === 'number'
     ) {
       throw new HttpException(
         'Request body does not contain required fields',

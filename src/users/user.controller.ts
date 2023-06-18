@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/creat-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
@@ -29,11 +29,25 @@ export class UserController {
     return this.userService.createUser(createUserDto);
   }
 
-  @Put()
+  @Put(':id')
   updatePassword (
     @Body() updatePasswordDto: UpdatePasswordDto,
-    @Param('uuid', new ParseUUIDPipe()) id: string
+    @Param('id', new ParseUUIDPipe()) id: string
   ) {
     return this.userService.updatePassword(updatePasswordDto, id);
+  }
+
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  deleteUser (@Param('id', new ParseUUIDPipe()) id: string) {
+    const user = this.userService.getUserById(id);
+    if (!user) {
+      throw new HttpException(
+        `User ${id} doesn't exist`,
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    this.userService.deleteUser(id);
+    return;
   }
 }
