@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { DataBaseService } from "src/dataBase/dataBase.service";
-import { CreateTrackDto } from "./dto/create-track.dto";
-import { v4 } from "uuid";
-import { UpdateTrackDto } from "./dto/update-track.dto";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { DataBaseService } from 'src/dataBase/dataBase.service';
+import { CreateTrackDto } from './dto/create-track.dto';
+import { v4 } from 'uuid';
+import { UpdateTrackDto } from './dto/update-track.dto';
 
 @Injectable()
 export class TrackService {
@@ -31,7 +31,11 @@ export class TrackService {
 
   updateTrack(updateTrackDto: UpdateTrackDto, id: string) {
     const track = this.dataBaseService.getTrack(id);
-    if (!track) throw new HttpException(`Track ${id} doesn't exist`, HttpStatus.NOT_FOUND);
+    if (!track)
+      throw new HttpException(
+        `Track ${id} doesn't exist`,
+        HttpStatus.NOT_FOUND,
+      );
     const updatedTrack = { ...track, ...updateTrackDto };
     this.dataBaseService.updateTrack(updatedTrack, id);
     return updatedTrack;

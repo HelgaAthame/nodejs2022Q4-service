@@ -1,9 +1,9 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { DataBaseService } from "src/dataBase/dataBase.service";
-import { CreateUserDto } from "./dto/creat-user.dto";
-import { User } from "./interfaces/user.interface";
-import { v4 } from "uuid";
-import { UpdatePasswordDto } from "./dto/update-password.dto";
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { DataBaseService } from 'src/dataBase/dataBase.service';
+import { CreateUserDto } from './dto/creat-user.dto';
+import { User } from './interfaces/user.interface';
+import { v4 } from 'uuid';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Injectable()
 export class UserService {
@@ -25,7 +25,7 @@ export class UserService {
       version: 1,
       createdAt: Date.now(),
       updatedAt: Date.now(),
-    }
+    };
     this.dataBaseService.addUser(newUser);
     const userToReturn = {
       id: newUser.id,
@@ -33,12 +33,12 @@ export class UserService {
       version: newUser.version,
       createdAt: newUser.createdAt,
       updatedAt: newUser.updatedAt,
-    }
+    };
     return userToReturn;
   }
 
   updatePassword(updatePasswordDto: UpdatePasswordDto, id: string) {
-    if (! updatePasswordDto.newPassword || ! updatePasswordDto.oldPassword) {
+    if (!updatePasswordDto.newPassword || !updatePasswordDto.oldPassword) {
       throw new HttpException(
         'There is no password in your req',
         HttpStatus.BAD_REQUEST,
@@ -48,7 +48,7 @@ export class UserService {
     const user = this.dataBaseService.getUser(id);
 
     if (!user) {
-      throw new HttpException( `User ${id} doesn't exist`, HttpStatus.NOT_FOUND);
+      throw new HttpException(`User ${id} doesn't exist`, HttpStatus.NOT_FOUND);
     }
 
     if (updatePasswordDto.oldPassword !== user.password) {
@@ -70,7 +70,7 @@ export class UserService {
       version: updatedUser.version,
       createdAt: updatedUser.createdAt,
       updatedAt: updatedUser.updatedAt,
-    }
+    };
 
     return userToReturn;
   }

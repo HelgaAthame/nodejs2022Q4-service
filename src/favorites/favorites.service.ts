@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { DataBaseService } from "src/dataBase/dataBase.service";
+import { Injectable } from '@nestjs/common';
+import { DataBaseService } from 'src/dataBase/dataBase.service';
 
 @Injectable()
 export class FavoritesService {

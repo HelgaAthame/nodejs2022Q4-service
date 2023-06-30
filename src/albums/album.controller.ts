@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { AlbumService } from './album.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
@@ -13,7 +25,7 @@ export class AlbumController {
     return this.albumService.getAllAlbums();
   }
 
-  @Get(':id' )
+  @Get(':id')
   getAlbumById(@Param('id', new ParseUUIDPipe()) id: string): Album {
     const album = this.albumService.getAlbumById(id);
     if (!album) {
@@ -26,10 +38,11 @@ export class AlbumController {
   }
 
   @Post()
-  createAlbum (@Body() createAlbumDto: CreateAlbumDto): Album {
-    if (!createAlbumDto.hasOwnProperty('name')
-      || !createAlbumDto.hasOwnProperty('year')
-      || !createAlbumDto.hasOwnProperty('artistId')
+  createAlbum(@Body() createAlbumDto: CreateAlbumDto): Album {
+    if (
+      !createAlbumDto.hasOwnProperty('name') ||
+      !createAlbumDto.hasOwnProperty('year') ||
+      !createAlbumDto.hasOwnProperty('artistId')
     ) {
       throw new HttpException(
         'Request body does not contain required fields',
@@ -40,17 +53,17 @@ export class AlbumController {
   }
 
   @Put(':id')
-  updateAlbum (
+  updateAlbum(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateAlbumDto: UpdateAlbumDto,
   ) {
     if (
-      !updateAlbumDto.hasOwnProperty('name')
-      || !updateAlbumDto.hasOwnProperty('year')
-      || !updateAlbumDto.hasOwnProperty('artistId')
-      || typeof updateAlbumDto.name === 'boolean'
-      || typeof updateAlbumDto.year === 'string'
-      || typeof updateAlbumDto.artistId === 'number'
+      !updateAlbumDto.hasOwnProperty('name') ||
+      !updateAlbumDto.hasOwnProperty('year') ||
+      !updateAlbumDto.hasOwnProperty('artistId') ||
+      typeof updateAlbumDto.name === 'boolean' ||
+      typeof updateAlbumDto.year === 'string' ||
+      typeof updateAlbumDto.artistId === 'number'
     ) {
       throw new HttpException(
         'Request body does not contain required fields',
@@ -63,7 +76,7 @@ export class AlbumController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteAlbum (@Param('id', new ParseUUIDPipe()) id: string) {
+  deleteAlbum(@Param('id', new ParseUUIDPipe()) id: string) {
     const album = this.albumService.getAlbumById(id);
     if (!album) {
       throw new HttpException(

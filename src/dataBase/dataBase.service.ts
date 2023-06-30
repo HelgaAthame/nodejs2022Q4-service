@@ -24,7 +24,7 @@ export class DataBaseService {
   }
 
   getUser(id: string) {
-    return this.users.find(user => user.id === id);
+    return this.users.find((user) => user.id === id);
   }
 
   getUsers() {
@@ -32,15 +32,14 @@ export class DataBaseService {
   }
 
   updateUser(newUserData: User, id: string) {
-    const index = this.users.findIndex(user => user.id === id);
+    const index = this.users.findIndex((user) => user.id === id);
     this.users[index] = newUserData;
   }
 
   deleteUser(id: string) {
-    const index = this.users.findIndex(user => user.id === id);
+    const index = this.users.findIndex((user) => user.id === id);
     this.users.splice(index, 1);
   }
-
 
   //albums
 
@@ -49,7 +48,7 @@ export class DataBaseService {
   }
 
   getAlbum(id: string) {
-    return this.albums.find(album => album.id === id);
+    return this.albums.find((album) => album.id === id);
   }
 
   getAlbums() {
@@ -57,19 +56,20 @@ export class DataBaseService {
   }
 
   updateAlbum(newAlbumData: Album, id: string) {
-    const index = this.albums.findIndex(album => album.id === id);
+    const index = this.albums.findIndex((album) => album.id === id);
     this.albums[index] = newAlbumData;
   }
 
   deleteAlbum(id: string) {
-    const index = this.albums.findIndex(album => album.id === id);
+    const index = this.albums.findIndex((album) => album.id === id);
     this.albums.splice(index, 1);
-    this.favorites.albums = this.favorites.albums.filter(albumId => albumId !== id);
-    this.tracks.forEach(track => {
+    this.favorites.albums = this.favorites.albums.filter(
+      (albumId) => albumId !== id,
+    );
+    this.tracks.forEach((track) => {
       if (track.albumId === id) track.albumId = null;
     });
   }
-
 
   //tracks
 
@@ -78,7 +78,7 @@ export class DataBaseService {
   }
 
   getTrack(id: string) {
-    return this.tracks.find(track => track.id === id);
+    return this.tracks.find((track) => track.id === id);
   }
 
   getTracks() {
@@ -86,16 +86,17 @@ export class DataBaseService {
   }
 
   updateTrack(newTrackData: Track, id: string) {
-    const index = this.tracks.findIndex(track => track.id === id);
+    const index = this.tracks.findIndex((track) => track.id === id);
     this.tracks[index] = newTrackData;
   }
 
   deleteTrack(id: string) {
-    const index = this.tracks.findIndex(track => track.id === id);
+    const index = this.tracks.findIndex((track) => track.id === id);
     this.tracks.splice(index, 1);
-    this.favorites.tracks = this.favorites.tracks.filter(trackId => trackId !== id);
+    this.favorites.tracks = this.favorites.tracks.filter(
+      (trackId) => trackId !== id,
+    );
   }
-
 
   //artists
 
@@ -104,7 +105,7 @@ export class DataBaseService {
   }
 
   getArtist(id: string) {
-    return this.artists.find(artist => artist.id === id);
+    return this.artists.find((artist) => artist.id === id);
   }
 
   getArtists() {
@@ -112,26 +113,27 @@ export class DataBaseService {
   }
 
   updateArtist(newArtistData: Artist, id: string) {
-    const index = this.artists.findIndex(artist => artist.id === id);
+    const index = this.artists.findIndex((artist) => artist.id === id);
     this.artists[index] = newArtistData;
   }
 
   deleteArtist(id: string) {
-    const index = this.artists.findIndex(artist => artist.id === id);
+    const index = this.artists.findIndex((artist) => artist.id === id);
     this.artists.splice(index, 1);
-    this.favorites.artists = this.favorites.artists.filter(artistId => artistId !== id);
-    this.tracks.forEach(track => {
+    this.favorites.artists = this.favorites.artists.filter(
+      (artistId) => artistId !== id,
+    );
+    this.tracks.forEach((track) => {
       if (track.artistId === id) track.artistId = null;
     });
-    this.albums.forEach(album => {
+    this.albums.forEach((album) => {
       if (album.artistId === id) album.artistId = null;
     });
   }
 
-
   //favorites
   isIt(id: string, what: string) {
-    const el = this[what].find((item: { id: string; }) => item.id === id);
+    const el = this[what].find((item: { id: string }) => item.id === id);
     return el ? true : false;
   }
 
@@ -140,16 +142,24 @@ export class DataBaseService {
   }
 
   getFavorites() {
-    const favorites ={
-      artists: this.artists.filter(artist => this.favorites.artists.includes(artist.id)),
-      albums: this.albums.filter(album => this.favorites.albums.includes(album.id)),
-      tracks: this.tracks.filter(track => this.favorites.tracks.includes(track.id)),
+    const favorites = {
+      artists: this.artists.filter((artist) =>
+        this.favorites.artists.includes(artist.id),
+      ),
+      albums: this.albums.filter((album) =>
+        this.favorites.albums.includes(album.id),
+      ),
+      tracks: this.tracks.filter((track) =>
+        this.favorites.tracks.includes(track.id),
+      ),
     };
     return favorites;
   }
 
   deleteFavorite(id: string, what: string) {
-    const index = this.favorites[what].findIndex((item: { id: string; }) => item.id === id);
+    const index = this.favorites[what].findIndex(
+      (item: { id: string }) => item.id === id,
+    );
     this.favorites[what].splice(index, 1);
   }
 }

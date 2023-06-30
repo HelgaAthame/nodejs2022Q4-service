@@ -15,7 +15,7 @@ import { FavoritesModule } from './favorites/favorites.module';
     AlbumModule,
     ArtistModule,
     DataBaseModule,
-    FavoritesModule
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

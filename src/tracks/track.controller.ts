@@ -1,20 +1,31 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpException, HttpStatus, Param, ParseUUIDPipe, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpException,
+  HttpStatus,
+  Param,
+  ParseUUIDPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
-import { validate } from 'uuid';
 import { Track } from './interfaces/track.interface';
 
 @Controller('track')
 export class TrackController {
   constructor(private readonly trackService: TrackService) {}
 
-  @Get ()
+  @Get()
   getAllTracks(): Track[] {
     return this.trackService.getAllTracks();
   }
 
-  @Get(':id' )
+  @Get(':id')
   getTrackById(@Param('id', new ParseUUIDPipe()) id: string): Track {
     const track = this.trackService.getTrackById(id);
     if (!track) {
@@ -27,11 +38,12 @@ export class TrackController {
   }
 
   @Post()
-  createTrack (@Body() createTrackDto: CreateTrackDto): Track {
-    if (!createTrackDto.hasOwnProperty('name')
-      || !createTrackDto.hasOwnProperty('duration')
-      || !createTrackDto.hasOwnProperty('albumId')
-      || !createTrackDto.hasOwnProperty('artistId')
+  createTrack(@Body() createTrackDto: CreateTrackDto): Track {
+    if (
+      !createTrackDto.hasOwnProperty('name') ||
+      !createTrackDto.hasOwnProperty('duration') ||
+      !createTrackDto.hasOwnProperty('albumId') ||
+      !createTrackDto.hasOwnProperty('artistId')
     ) {
       throw new HttpException(
         'Request body does not contain required fields',
@@ -42,18 +54,18 @@ export class TrackController {
   }
 
   @Put(':id')
-  updateTrack (
+  updateTrack(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateTrackDto: UpdateTrackDto,
   ): Track {
     if (
-      !updateTrackDto.hasOwnProperty('name')
-      || !updateTrackDto.hasOwnProperty('duration')
-      || !updateTrackDto.hasOwnProperty('albumId')
-      || !updateTrackDto.hasOwnProperty('artistId')
-      || typeof updateTrackDto.duration !== 'number'
-      || typeof updateTrackDto.albumId === 'number'
-      || typeof updateTrackDto.artistId === 'number'
+      !updateTrackDto.hasOwnProperty('name') ||
+      !updateTrackDto.hasOwnProperty('duration') ||
+      !updateTrackDto.hasOwnProperty('albumId') ||
+      !updateTrackDto.hasOwnProperty('artistId') ||
+      typeof updateTrackDto.duration !== 'number' ||
+      typeof updateTrackDto.albumId === 'number' ||
+      typeof updateTrackDto.artistId === 'number'
     ) {
       throw new HttpException(
         'Request body does not contain required fields',
@@ -66,7 +78,7 @@ export class TrackController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  deleteTrack (@Param('id', new ParseUUIDPipe()) id: string) {
+  deleteTrack(@Param('id', new ParseUUIDPipe()) id: string) {
     const track = this.trackService.getTrackById(id);
     if (!track) {
       throw new HttpException(
