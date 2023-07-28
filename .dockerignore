@@ -3,5 +3,6 @@ dist
 .vscode
 .github
 .git
+.env
 docs
 logs
