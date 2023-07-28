@@ -18,7 +18,11 @@
     "test:auth": "cross-env TEST_MODE=auth jest --config ./test/jest-e2e.json",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand"
+    "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
+    "docker:scan": "docker scan nodejs2022q2-service_node && docker scan nodejs2022q2-service_postgres",
+    "prisma:migrate:start": "prisma migrate dev && npm start",
+    "prisma:nodemon": "prisma generate && prisma migrate dev && npm run nodemon",
+    "nodemon": "nodemon --legacy-watch -x ts-node ./src/main.ts"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
