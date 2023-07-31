@@ -14,20 +14,20 @@ import {
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/creat-user.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
-import { User } from './interfaces/user.interface';
+import { User } from 'prisma/prisma-client';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  getAllUsers(): User[] {
-    return this.userService.getAllUsers();
+  async getAllUsers(): Promise<User[]> {
+    return await this.userService.getAllUsers();
   }
 
   @Get(':id')
-  getUserById(@Param('id', new ParseUUIDPipe()) id: string): User {
-    const user = this.userService.getUserById(id);
+  async getUserById(@Param('id', new ParseUUIDPipe()) id: string): Promise<User> {
+    const user = await this.userService.getUserById(id);
     if (!user) {
       throw new HttpException(`User ${id} doesn't exist`, HttpStatus.NOT_FOUND);
     }
